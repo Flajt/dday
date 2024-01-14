@@ -76,6 +76,14 @@ class MarkerRepository implements IMarkerRepository {
       } else if (requestModel.count >= 1) {
         for (MeetingModel model in requestModel.index) {
           l.LatLng? location;
+          List<String> aufzugsStrecke = [];
+
+          if (model.aufzugsStrecke.length == 1 &&
+              model.aufzugsStrecke.first.isEmpty) {
+            aufzugsStrecke = [];
+          } else {
+            aufzugsStrecke = model.aufzugsStrecke;
+          }
 
           /// 1.  Look into cache if the address is already there
           final String locationString =
@@ -89,7 +97,7 @@ class MarkerRepository implements IMarkerRepository {
               _dateTimeHelper.convertFromStringToddmm(model.von),
               locationString,
               model.thema,
-              model.aufzugsStrecke,
+              aufzugsStrecke,
               model.lfdnr,
               location,
               [],
