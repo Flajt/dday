@@ -10,15 +10,20 @@ class InfoDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
+        margin: const EdgeInsets.all(8),
         padding: const EdgeInsets.all(8),
-        width: 400,
-        height: 410,
+        width: 410,
+        height: markerModel.route.isNotEmpty ? 450 : 350,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(markerModel.topic,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge),
+            Text(
+              markerModel.topic,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 10,
+            ),
             ListTile(
                 leading: const Icon(Icons.alarm),
                 subtitle: Text("${markerModel.location}, ${markerModel.plz}"),
@@ -26,12 +31,14 @@ class InfoDialog extends StatelessWidget {
                     "${markerModel.from.hour.toString()}:${markerModel.from.minute.toString()} - ${markerModel.to.hour.toString()}:${markerModel.to.minute.toString()}")),
             markerModel.route.isNotEmpty
                 ? Expanded(
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                          child: Text(
-                        markerModel.route.join(" "),
-                        textAlign: TextAlign.center,
-                      )),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: SizedBox(
+                            child: Text(
+                          markerModel.route.join(" "),
+                          textAlign: TextAlign.center,
+                        )),
+                      ),
                     ),
                   )
                 : const SizedBox(),
